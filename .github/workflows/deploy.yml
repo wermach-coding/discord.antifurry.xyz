@@ -1,1 +1,22 @@
+name: Deploy to WebHostMost
 
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Install SSH client
+      run: sudo apt-get install openssh-client
+      
+    - name: Deploy via SSH
+      run: |
+        ssh $SSH_USER@server1.webhostmost.com 'bash -s' < deploy.sh
+      env:
+        SSH_USER: fqgsrgjp
